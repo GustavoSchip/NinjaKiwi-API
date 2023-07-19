@@ -19,5 +19,6 @@ exclude =
     .mypy_cache,
     .pytest_cache,
     .vscode,
+    .idea,
     .github,
     tests
