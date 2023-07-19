@@ -12,11 +12,6 @@ classifiers=[
     'Intended Audience :: Developers',
     'License :: OSI Approved :: MIT License',
     'Natural Language :: English',
-    'Programming Language :: Python :: 3',
-    'Programming Language :: Python :: 3.7',
-    'Programming Language :: Python :: 3.8',
-    'Programming Language :: Python :: 3.9',
-    'Programming Language :: Python :: 3.10',
     'Programming Language :: Python :: 3.11',
 ]
 packages = [
@@ -25,13 +20,16 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
-python = ">=3.7.1,<4.0"
+python = ">=3.11,<4.0.0"
 
+asyncio  = {version = "^3.4.3", optional = true}
+aiohttp  = { version = "^3.8.1", optional = true}
 black  = { version = "^22.3.0", optional = true}
 isort  = { version = "5.10.1", optional = true}
 flake8  = { version = "4.0.1", optional = true}
 flake8-docstrings = { version = "^1.6.0", optional = true }
 pytest  = { version = "^7.0.1", optional = true}
+pytest-asyncio  = {version = "^0.21.1", optional = true}
 pytest-cov  = { version = "^3.0.0", optional = true}
 tox  = { version = "^3.24.5", optional = true}
 virtualenv  = { version = "^20.13.1", optional = true}
@@ -48,6 +46,7 @@ toml = {version = "^0.10.2", optional = true}
 livereload = {version = "^2.6.3", optional = true}
 pyreadline = {version = "^2.1", optional = true}
 mike = { version="^1.1.2", optional=true}
+tornado = {version = "^6.2", optional = true}
 
 [tool.poetry.extras]
 test = [
@@ -56,7 +55,8 @@ test = [
     "isort",
     "flake8",
     "flake8-docstrings",
-    "pytest-cov"
+    "pytest-cov",
+    "pytest-asyncio"
     ]
 
 dev = ["tox", "pre-commit", "virtualenv", "pip", "twine", "toml"]
