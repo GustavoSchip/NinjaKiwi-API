@@ -1,7 +1,7 @@
 [tool]
 [tool.poetry]
 name = "ninjakiwi_api"
-version = "0.0.8"
+version = "0.0.9"
 homepage = "https://github.com/GustavoSchip/ninjakiwi-api"
 description = "NinjaKiwi API (OpenDATA) for Python! (My first library)"
 authors = [
@@ -20,8 +20,8 @@ classifiers = [
     'Programming Language :: Python :: 3.11',
 ]
 keywords = [
-    "NinjaKiwi",
     "API",
+    "NinjaKiwi",
 ]
 packages = [
     { include = "ninjakiwi_api" },
