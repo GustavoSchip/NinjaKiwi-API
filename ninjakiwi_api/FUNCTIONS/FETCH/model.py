@@ -58,21 +58,23 @@ class _model:
             The values corresponding to the given name. Returns None if no matching entries
             are found in the data or if all matching entries have a value of None.
         """
-        result = []
-        found_entries = False
 
-        for entry in self.data.get("body", []):
-            for key, value in entry.items():
-                if key == name:
-                    if not found_entries:
-                        found_entries = True
-                    if value is not None:
-                        result.append(value)
+        def traverse(data, target_name):
+            results = []
+            if isinstance(data, dict):
+                for key, value in data.items():
+                    if key == target_name:
+                        if value is not None:
+                            results.append(value)
+                    elif isinstance(value, (dict, list)):
+                        results.extend(traverse(value, target_name))
+            elif isinstance(data, list):
+                for item in data:
+                    results.extend(traverse(item, target_name))
+            return results
 
-        if not found_entries:
-            return None
-
-        return result if result else None
+        results = traverse(self.data, name)
+        return results if results else None
 
 
 async def _handler(

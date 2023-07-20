@@ -70,14 +70,21 @@ Ready to contribute? Here's how to set up `ninjakiwi_api` for local development.
 
    Now you can make your changes locally.
 
-6. When you're done making changes, check that your changes pass the
+6. Make sure to set this environment variable,
+   `PYTEST_BTD6_USER_ID`!
+
+```
+    $ export PYTEST_BTD6_USER_ID="oak_{FILL_IN}"
+```
+
+7. When you're done making changes, check that your changes pass the
    tests, including testing other Python versions, with tox:
 
 ```
     $ tox
 ```
 
-7. Commit your changes and push your branch to GitHub:
+8. Commit your changes and push your branch to GitHub:
 
 ```
     $ git add .
@@ -85,7 +92,7 @@ Ready to contribute? Here's how to set up `ninjakiwi_api` for local development.
     $ git push origin name-of-your-bugfix-or-feature
 ```
 
-8. Submit a pull request through the GitHub website.
+9. Submit a pull request through the GitHub website.
 
 ## Pull Request Guidelines
 

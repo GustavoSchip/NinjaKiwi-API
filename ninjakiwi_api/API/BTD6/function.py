@@ -128,10 +128,15 @@ async def _btd6_url_factory(data: str, **options) -> Optional[str]:
 
     if data == "challenges":
         challengeFilter = options.get("challengeFilter")
-        if challengeFilter not in _ChallengeFilter.__members__:
-            return None
+        if challengeFilter is not None:
+            challengeFilter = challengeFilter.upper()
+            if challengeFilter in _ChallengeFilter.__members__:
+                challengeFilter = challengeFilter.lower()
+                return f"{base_url}/filter/{challengeFilter}"
+            else:
+                return None
 
-        return f"{base_url}/filter/{challengeFilter}"
+        return base_url
 
     if data == "ct":
         ctID = options.get("ctID")
