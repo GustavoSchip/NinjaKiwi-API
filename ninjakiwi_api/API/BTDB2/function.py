@@ -15,6 +15,39 @@ class _ChallengeFilter(str, Enum):
 
 
 async def _btdb2_url_factory(data: str, **options) -> Optional[str]:
+    """
+    Construct the NinjaKiwi API URL for Bloons TD Battles 2 based on the specified data and options.
+
+    Parameters
+    ----------
+    data : str
+        The type of data to fetch. The supported data types are:
+        "homs" and "users".
+
+    **options : Any
+        Additional options to customize the API URL based on the data type.
+
+    Returns
+    -------
+    Optional[str]
+        The constructed API URL as a string if the data and options are valid, otherwise None.
+
+    Notes
+    -----
+    - This function generates the API URL for various Bloons TD Battles 2 data types based on the input parameters.
+    - The constructed URL is specific to the NinjaKiwi API for Bloons TD Battles 2.
+
+    Parameters for each data type:
+    ------------------------------
+    homs:
+        homID : str
+            The ID of the Hall of Masters event for which the leaderboard is fetched.
+
+    users:
+        userID : str
+            The ID of the player for which the data is fetched.
+    """
+
     types = [
         "homs",
         "users",

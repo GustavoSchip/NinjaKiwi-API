@@ -42,15 +42,14 @@ async def fetch(game: str, data: str) -> Optional[_model] | None:
             - "odyssey": Returns information about Odyssey events and their maps.
 
         For "BTDB2" (Bloons TD Battles 2):
-            - "homs": Returns a list of current Hall of Masters events.
+            - "homs": Returns a list of current Hall of Masters events or recent Hall of Masters positions for a player.
             - "leaderboard": Returns a HOM leaderboard for a specific event.
             - "users": Returns information about a Battles 2 Player.
             - "matches": Returns recent match information for a player.
-            - "homs": Returns recent Hall of Masters positions for a player.
 
     Returns
     -------
-    Union or None
+    Optional[_model] | None
         A Union containing the fetched data if successful, or None if the data could not be fetched.
 
     Raises
@@ -65,18 +64,37 @@ async def fetch(game: str, data: str) -> Optional[_model] | None:
     - The returned dictionary will vary depending on the specific data being fetched.
     - If the provided game or data is not recognized or supported, the function returns None.
 
+    See also
+    --------
+    _game_to_func : Function used internally to generate the API URL based on the game and data type.
+    _api_fetch : Function used to perform the actual HTTP request and fetch data from the API.
+    _btd6_url_factory : Function used to construct the API URL for Bloons TD 6.
+    _btdb2_url_factory : Function used to construct the API URL for Bloons TD Battles 2.
+
     Examples
     --------
-    >>> data = await fetch("BTD6", "races")
-    >>> if data is not None:
-    >>>     raw = await data.get_raw_data()
-    >>>     example = await data.get_data("id")
-    >>>     print(f"Successfully fetched race data: {raw}")
-    >>>     if example is not None:
-    >>>         print(f"Successfully fetched race data: {example}")
-    >>> else:
-    >>>     print("Failed to fetch race data.")
+    Fetch race data for BTD6:
+
+        data = await fetch("BTD6", "races")
+        if data is not None:
+            raw = await data.get_raw_data()
+            example = await data.get_data("id")
+            print(f"Successfully fetched race data: {raw}")
+            if example is not None:
+                print(f"Successfully fetched race data: {example}")
+        else:
+            print("Failed to fetch race data.")
+
+    Fetch HOM leaderboard for BTDB2:
+
+        data = await fetch("BTDB2", "leaderboard")
+        if data is not None:
+            leaderboard = await data.get_data("leaderboard")
+            print(f"Successfully fetched HOM leaderboard: {leaderboard}")
+        else:
+            print("Failed to fetch HOM leaderboard.")
     """
+
     url = await _game_to_func(game, data)
     if url is not None:
         return await _api_fetch(url)

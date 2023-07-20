@@ -26,6 +26,74 @@ class _OdysseyDifficulty(str, Enum):
 
 
 async def _btd6_url_factory(data: str, **options) -> Optional[str]:
+    """
+    Construct the NinjaKiwi API URL for Bloons TD 6 based on the specified data and options.
+
+    Parameters
+    ----------
+    data : str
+        The type of data to fetch. The supported data types are:
+        "races", "bosses", "challenges", "ct", "odyssey", "users", "guild", and "save".
+
+    **options : Any
+        Additional options to customize the API URL based on the data type.
+
+    Returns
+    -------
+    Optional[str]
+        The constructed API URL as a string if the data and options are valid, otherwise None.
+
+    Notes
+    -----
+    - This function generates the API URL for various Bloons TD 6 data types based on the input parameters.
+    - The constructed URL is specific to the NinjaKiwi API for Bloons TD 6.
+
+    Parameters for each data type:
+    ------------------------------
+    races:
+        No additional options required.
+
+    bosses:
+        bossID : str
+            The ID of the boss for which the leaderboard is fetched.
+
+        type : str
+            The type of leaderboard to fetch (e.g., "type1", "type2", etc.).
+
+        teamSize : str
+            The size of the team for the leaderboard (e.g., "1", "2", etc.).
+
+    challenges:
+        challengeFilter : str
+            The filter to apply when fetching challenge data (e.g., "filter1", "filter2", etc.).
+
+    ct:
+        ctID : str
+            The ID of the Collection Event for which the leaderboard is fetched.
+
+    odyssey:
+        odysseyID : str
+            The ID of the Odyssey event for which the data is fetched.
+
+        difficulty : str
+            The difficulty level of the Odyssey (e.g., "easy", "medium", "hard").
+
+        maps : list[str]
+            Optional list of map names for the specified Odyssey event.
+
+    users:
+        userID : str
+            The ID of the player for which the data is fetched.
+
+    guild:
+        guildID : str
+            The ID of the guild for which the data is fetched.
+
+    save:
+        oakID : str
+            The ID of the player's save data to fetch.
+    """
+
     types = [
         "races",
         "bosses",

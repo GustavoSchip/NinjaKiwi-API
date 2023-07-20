@@ -1,7 +1,7 @@
 """FUNCTION-level package for NinjaKiwi API."""
 
 import json
-from typing import Optional, Union
+from typing import Optional, Union, List
 
 import aiohttp
 
@@ -43,27 +43,36 @@ class _model:
 
     async def get_data(
         self, name: str
-    ) -> Union[dict, list, str, int, float, bool, None] | None:
+    ) -> List[Union[dict, list, str, int, float, bool, None]] | None:
         """
-        Get the value corresponding to the given name from the data.
+        Get the values corresponding to the given name from the data.
 
         Parameters
         ----------
         name : str
-            The name of the entry to retrieve.
+            The name of the entries to retrieve.
 
         Returns
         -------
-        Union[dict, list, str, int, float, bool, None] | None
-            The value corresponding to the given name, or None if the name
-            was not found in the data.
+        List[Union[dict, list, str, int, float, bool]] | None
+            The values corresponding to the given name. Returns None if no matching entries
+            are found in the data or if all matching entries have a value of None.
         """
+        result = []
+        found_entries = False
+
         for entry in self.data.get("body", []):
-            if entry:
-                for key, value in entry.items():
-                    if key == name:
-                        return value
-        return None
+            for key, value in entry.items():
+                if key == name:
+                    if not found_entries:
+                        found_entries = True
+                    if value is not None:
+                        result.append(value)
+
+        if not found_entries:
+            return None
+
+        return result if result else None
 
 
 async def _handler(
