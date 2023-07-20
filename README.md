@@ -65,8 +65,10 @@ if __name__ == "__main__":
     main()
 ```
 
-# Coming soon...
+## Additional info
 
-Stay tuned guys
+[LICENSE](https://github.com/GustavoSchip/NinjaKiwi-API/blob/master/LICENSE)
+<br>
+[CONTRIBUTING](https://github.com/GustavoSchip/NinjaKiwi-API/blob/master/CONTRIBUTING.md)
 
 ---

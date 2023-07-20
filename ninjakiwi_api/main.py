@@ -50,8 +50,8 @@ async def fetch(game: str, data: str) -> Optional[_model] | None:
 
     Returns
     -------
-    dict or None
-        A dictionary containing the fetched data if successful, or None if the data could not be fetched.
+    Union or None
+        A Union containing the fetched data if successful, or None if the data could not be fetched.
 
     Raises
     ------
