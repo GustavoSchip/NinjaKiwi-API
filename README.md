@@ -14,7 +14,7 @@
 
 <br>
 
-This project was born because of the need of an API wrapper for the NinjaKiwi API. (A.K.A. OpenDATA)
+This project was born because of the need of an API wrapper for the NinjaKiwi API. (A.K.A. Open Data)
 <br>
 Do note that this is my first ever library and I still have a lot to learn!
 
