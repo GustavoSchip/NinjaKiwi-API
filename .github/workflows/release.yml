@@ -62,10 +62,12 @@ jobs:
       - name: Declare variables for convenient use
         id: variables_step
         run: |
-          echo "::set-output name=repo_owner::${GITHUB_REPOSITORY%/*}"
-          echo "::set-output name=repo_name::${GITHUB_REPOSITORY#*/}"
-          echo "::set-output name=package_name::`poetry version | awk '{print $1}'`"
-          echo "::set-output name=package_version::`poetry version --short`"
+          echo "repo_owner=${GITHUB_REPOSITORY%/*}" >> $GITHUB_STATE
+          echo "repo_name=${GITHUB_REPOSITORY#*/}" >> $GITHUB_STATE
+          PACKAGE_NAME=$(poetry version | awk '{print $1}')
+          echo "package_name=${PACKAGE_NAME}" >> $GITHUB_STATE
+          PACKAGE_VERSION=$(poetry version --short)
+          echo "package_version=${PACKAGE_VERSION}" >> $GITHUB_STATE
         shell: bash
 
       - name: Build wheels and source tarball
@@ -80,7 +82,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: v${{ steps.build_changelog.outputs.package_version }}
-          release_name: v${{ steps.build_changelog.outputs.package_version }}
+          release_name: Release ${{ github.ref_name }}
           body: ${{ steps.build_changelog.outputs.changelog }}
           draft: false
           prerelease: false

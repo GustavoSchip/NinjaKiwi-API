@@ -24,6 +24,7 @@ class _model:
     data : dict
         The decoded JSON data containing the information.
     """
+
     def __init__(self, data: dict, response: aiohttp.ClientResponse):
         self.response = response
         self.data = data
@@ -40,7 +41,9 @@ class _model:
         """
         return await self.response.json()
 
-    async def get_data(self, name: str) -> Union[dict, list, str, int, float, bool, None] | None:
+    async def get_data(
+        self, name: str
+    ) -> Union[dict, list, str, int, float, bool, None] | None:
         """
         Get the value corresponding to the given name from the data.
 
