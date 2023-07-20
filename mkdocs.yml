@@ -1,6 +1,6 @@
 site_name: NinjaKiwi API
 # site_url: http://www.jieyu.ai
-repo_url: https://github.com/GustavoSchip/ninjakiwi_api
+repo_url: https://github.com/GustavoSchip/ninjakiwi-api
 repo_name: ninjakiwi_api
 #strict: true
 nav:
