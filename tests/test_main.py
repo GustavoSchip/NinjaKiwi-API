@@ -18,6 +18,10 @@ async def test_fetch_btd6():
 
     assert "success" in data
 
+    temp = await results.get_data("id")
+
+    assert temp is not None
+
 
 @pytest.mark.asyncio
 async def test_fetch_btdb2():
@@ -31,3 +35,7 @@ async def test_fetch_btdb2():
     data = await results.get_raw_data()
 
     assert "success" in data
+
+    temp = await results.get_data("id")
+
+    assert temp is not None

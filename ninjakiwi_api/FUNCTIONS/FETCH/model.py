@@ -1,7 +1,7 @@
 """FUNCTION-level package for NinjaKiwi API."""
 
 import json
-from typing import Optional
+from typing import Optional, Union
 
 import aiohttp
 
@@ -14,21 +14,13 @@ class _model:
     async def get_raw_data(self) -> dict | None:
         return await self.response.json()
 
-    async def get_data(self, **options) -> dict | None:
-        atr = {}
-        options_found = False
-
-        for option_name, option_value in options.items():
-            temp = self.data.get(option_name)
-            if temp is not None:
-                atr[option_name] = temp
-                if not options_found:
-                    options_found = True
-
-        if not options_found:
-            return None
-        else:
-            return atr
+    async def get_data(self, name: str) -> Union[dict, list, str, int, float, bool, None] | None:
+        for entry in self.data.get("body", []):
+            if entry:
+                for key, value in entry.items():
+                    if key == name:
+                        return value
+        return None
 
 
 async def _handler(

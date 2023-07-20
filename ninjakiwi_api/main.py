@@ -68,8 +68,12 @@ async def fetch(game: str, data: str) -> Optional[_model] | None:
     Examples
     --------
     >>> data = await fetch("BTD6", "races")
-    >>> if data:
-    >>>     print(f"Successfully fetched race data: {data}")
+    >>> if data is not None:
+    >>>     raw = await data.get_raw_data()
+    >>>     example = await data.get_data("id")
+    >>>     print(f"Successfully fetched race data: {raw}")
+    >>>     if example is not None:
+    >>>         print(f"Successfully fetched race data: {example}")
     >>> else:
     >>>     print("Failed to fetch race data.")
     """
