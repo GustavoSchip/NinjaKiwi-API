@@ -1007,13 +1007,13 @@ files = [
 
 [[package]]
 name = "pip"
-version = "22.3.1"
+version = "23.2"
 description = "The PyPA recommended tool for installing Python packages."
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "pip-22.3.1-py3-none-any.whl", hash = "sha256:908c78e6bc29b676ede1c4d57981d490cb892eb45cd8c214ab6298125119e077"},
-    {file = "pip-22.3.1.tar.gz", hash = "sha256:65fd48317359f3af8e593943e6ae1506b66325085ea64b706a998c6e83eeaf38"},
+    {file = "pip-23.2-py3-none-any.whl", hash = "sha256:78e5353a9dda374b462f2054f83a7b63f3f065c98236a68361845c1b0ee7e35f"},
+    {file = "pip-23.2.tar.gz", hash = "sha256:a160a170f3331d9ca1a0247eb1cd79c758879f1f81158f9cd05bbb5df80bea5c"},
 ]
 
 [[package]]
@@ -1664,4 +1664,4 @@ test = ["black", "flake8", "flake8-docstrings", "isort", "pytest", "pytest-async
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.11,<4.0.0"
-content-hash = "2da1a4a8307b018efed0fb12c42e501e62634c65bde476ac89dfc2046ecd7e75"
+content-hash = "a224fb333757990cce8867f1f7cdf1ac9ff00d6e0d7a66bdf25d8e973dc6de49"
