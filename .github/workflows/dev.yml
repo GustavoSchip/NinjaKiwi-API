@@ -55,12 +55,12 @@ jobs:
       - name: Declare variables for convenient use
         id: variables_step
         run: |
-          echo "repo_owner=${GITHUB_REPOSITORY%/*}" >> $GITHUB_STATE
-          echo "repo_name=${GITHUB_REPOSITORY#*/}" >> $GITHUB_STATE
+          echo "repo_owner=${GITHUB_REPOSITORY%/*}" >> "$GITHUB_OUTPUT"
+          echo "repo_name=${GITHUB_REPOSITORY#*/}" >> "$GITHUB_OUTPUT"
           PACKAGE_NAME=$(poetry version | awk '{print $1}')
-          echo "package_name=${PACKAGE_NAME}" >> $GITHUB_STATE
+          echo "package_name=${PACKAGE_NAME}" >> "$GITHUB_OUTPUT"
           PACKAGE_VERSION=$(poetry version --short)
-          echo "package_version=${PACKAGE_VERSION}" >> $GITHUB_STATE
+          echo "package_version=${PACKAGE_VERSION}" >> "$GITHUB_OUTPUT"
         shell: bash
 
       - name: test with tox
