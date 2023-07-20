@@ -1243,7 +1243,7 @@ files = [
 name = "pip"
 version = "22.3.1"
 description = "The PyPA recommended tool for installing Python packages."
-optional = true
+optional = false
 python-versions = ">=3.7"
 files = [
     {file = "pip-22.3.1-py3-none-any.whl", hash = "sha256:908c78e6bc29b676ede1c4d57981d490cb892eb45cd8c214ab6298125119e077"},
@@ -2000,4 +2000,4 @@ test = ["black", "flake8", "flake8-docstrings", "isort", "pytest", "pytest-async
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.11,<4.0.0"
-content-hash = "08b41f61b4a7a88a72b0444bb37c1513b7e16645ef94de1df3f504073d4d6be0"
+content-hash = "656c38fa6c974108b31400555ad99f1774fc3e3e4d2630b1423ceadf7521f111"
