@@ -8,7 +8,7 @@ from .API import _btd6_url_factory, _btdb2_url_factory
 from .FUNCTIONS import _api_fetch, _error_handler
 
 
-async def _game_to_func(game: str, data: str) -> str | None:
+async def _game_to_func(game: str, data: str, **options) -> str | None:
     games = {
         "BTD6": _btd6_url_factory,
         "BTDB2": _btdb2_url_factory,
@@ -16,13 +16,13 @@ async def _game_to_func(game: str, data: str) -> str | None:
     try:
         for entry, func in games.items():
             if game == entry:
-                return await func(data)
+                return await func(data, **options)
     except (AttributeError, TypeError):
         await _error_handler(act="str", exception=f"Game {game} not found.")
         return None
 
 
-async def fetch(game: str, data: str) -> Optional[_model] | None:
+async def fetch(game: str, data: str, **options) -> Optional[_model] | None:
     """
     Asynchronously fetches data from the NinjaKiwi API based on the specified game and data type.
 
@@ -95,7 +95,7 @@ async def fetch(game: str, data: str) -> Optional[_model] | None:
             print("Failed to fetch HOM leaderboard.")
     """
 
-    url = await _game_to_func(game, data)
+    url = await _game_to_func(game, data, **options)
     if url is not None:
         return await _api_fetch(url)
     else:

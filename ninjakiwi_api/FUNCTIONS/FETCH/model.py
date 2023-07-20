@@ -1,7 +1,7 @@
 """FUNCTION-level package for NinjaKiwi API."""
 
 import json
-from typing import Optional, Union, List
+from typing import List, Optional, Union
 
 import aiohttp
 

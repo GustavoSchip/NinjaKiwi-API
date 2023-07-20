@@ -1,7 +1,7 @@
 [tool]
 [tool.poetry]
 name = "ninjakiwi_api"
-version = "0.0.14"
+version = "0.0.15"
 homepage = "https://github.com/GustavoSchip/ninjakiwi-api"
 description = "NinjaKiwi API (Open Data) for Python! (My first library)"
 authors = [
@@ -44,7 +44,7 @@ tox  = { version = ">=3.24.5,<5.0.0", optional = true}
 virtualenv  = { version = "^20.13.1", optional = true}
 pip  = { version = ">=22.0.3,<24.0.0"}
 twine  = { version = "^3.8.0", optional = true}
-pre-commit = {version = ">=2.17,<4.0"}
+pre-commit = {version = ">=2.17,<4.0", optional = true}
 toml = {version = "^0.10.2", optional = true}
 livereload = {version = "^2.6.3", optional = true}
 pyreadline = {version = "^2.1", optional = true}
