@@ -1,3 +1,3 @@
 """API-level package for NinjaKiwi API."""
 
-from .function import btd6_url_factory
+from .function import _btd6_url_factory

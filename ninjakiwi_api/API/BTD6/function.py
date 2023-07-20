@@ -8,24 +8,24 @@ __endpoint__ = "https://data.ninjakiwi.com/"
 __game__ = "btd6"
 
 
-class ChallengeFilter(str, Enum):
+class _ChallengeFilter(str, Enum):
     NEWEST = "newest"
     TRENDING = "trending"
     DAILY = "daily"
 
 
-class BossEvent(str, Enum):
+class _BossEvent(str, Enum):
     STANDARD = "standard"
     ELITE = "elite"
 
 
-class OdysseyDifficulty(str, Enum):
+class _OdysseyDifficulty(str, Enum):
     EASY = "easy"
     MEDIUM = "medium"
     HARD = "hard"
 
 
-async def btd6_url_factory(data: str, **options) -> Optional[str]:
+async def _btd6_url_factory(data: str, **options) -> Optional[str]:
     types = [
         "races",
         "bosses",
@@ -51,7 +51,7 @@ async def btd6_url_factory(data: str, **options) -> Optional[str]:
 
             type_ = options.get("type")
             teamSize = options.get("teamSize")
-            if type_ not in BossEvent.__members__ or teamSize != "1":
+            if type_ not in _BossEvent.__members__ or teamSize != "1":
                 return None
 
             return f"{base_url}/{bossID}/leaderboard/{type_}/{teamSize}"
@@ -60,7 +60,7 @@ async def btd6_url_factory(data: str, **options) -> Optional[str]:
 
     if data == "challenges":
         challengeFilter = options.get("challengeFilter")
-        if challengeFilter not in ChallengeFilter.__members__:
+        if challengeFilter not in _ChallengeFilter.__members__:
             return None
 
         return f"{base_url}/filter/{challengeFilter}"
@@ -75,7 +75,7 @@ async def btd6_url_factory(data: str, **options) -> Optional[str]:
     if data == "odyssey":
         odysseyID = options.get("odysseyID")
         difficulty = options.get("difficulty")
-        if odysseyID is not None and difficulty in OdysseyDifficulty.__members__:
+        if odysseyID is not None and difficulty in _OdysseyDifficulty.__members__:
             maps = options.get("maps")
             if maps is not None:
                 return f"{base_url}/{odysseyID}/{difficulty}/maps"

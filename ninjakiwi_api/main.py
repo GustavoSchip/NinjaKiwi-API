@@ -1,15 +1,17 @@
 """Main module."""
 
-from typing import Callable
+from typing import Optional
 
-from .API import btd6_url_factory, btdb2_url_factory
+from ninjakiwi_api.FUNCTIONS.FETCH.model import _model
+
+from .API import _btd6_url_factory, _btdb2_url_factory
 from .FUNCTIONS import _api_fetch, _error_handler
 
 
 async def _game_to_func(game: str, data: str) -> str | None:
     games = {
-        "BTD6": btd6_url_factory,
-        "BTDB2": btdb2_url_factory,
+        "BTD6": _btd6_url_factory,
+        "BTDB2": _btdb2_url_factory,
     }
     try:
         for entry, func in games.items():
@@ -20,7 +22,7 @@ async def _game_to_func(game: str, data: str) -> str | None:
         return None
 
 
-async def fetch(game: str, data: str) -> dict | None:
+async def fetch(game: str, data: str) -> Optional[_model] | None:
     """
     Asynchronously fetches data from the NinjaKiwi API based on the specified game and data type.
 

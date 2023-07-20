@@ -8,13 +8,13 @@ __endpoint__ = "https://data.ninjakiwi.com/"
 __game__ = "battles2"
 
 
-class ChallengeFilter(str, Enum):
+class _ChallengeFilter(str, Enum):
     NEWEST = "newest"
     TRENDING = "trending"
     DAILY = "daily"
 
 
-async def btdb2_url_factory(data: str, **options) -> Optional[str]:
+async def _btdb2_url_factory(data: str, **options) -> Optional[str]:
     types = [
         "homs",
         "users",

@@ -12,7 +12,11 @@ async def test_fetch_btd6():
 
     results = await fetch("BTD6", "races")
 
-    assert "success" in results
+    assert results is not None
+
+    data = await results.get_raw_data()
+
+    assert "success" in data
 
 
 @pytest.mark.asyncio
@@ -22,4 +26,8 @@ async def test_fetch_btdb2():
 
     results = await fetch("BTDB2", "homs")
 
-    assert "success" in results
+    assert results is not None
+
+    data = await results.get_raw_data()
+
+    assert "success" in data
