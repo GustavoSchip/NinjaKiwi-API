@@ -17,6 +17,12 @@
 This project was born because of the need of an API wrapper for the NinjaKiwi API. (A.K.A. Open Data)
 <br>
 Do note that this is my first ever library and I still have a lot to learn!
+<br>
+The games supported in [Open Data](https://data.ninjakiwi.com/) are:
+
+- #### [Bloons Tower Defence 6](https://ninjakiwi.com/our-games#bloonstd6)
+
+- #### [Bloons Tower Defence Battles 2](https://ninjakiwi.com/our-games#battles)
 
 # Usage
 
