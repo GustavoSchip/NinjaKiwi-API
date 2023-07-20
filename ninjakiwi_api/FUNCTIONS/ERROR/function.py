@@ -3,7 +3,7 @@
 from aiohttp import ClientResponse
 
 
-async def error_handler(
+async def _error_handler(
     act: str, response: ClientResponse = None, exception: str = None
 ) -> None:
 

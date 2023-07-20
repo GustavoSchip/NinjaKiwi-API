@@ -1,3 +1,5 @@
 """FUNCTION-level package for NinjaKiwi API."""
 
-from .function import error_handler
+from .function import _error_handler
+
+__all__ = ["_error_handler"]

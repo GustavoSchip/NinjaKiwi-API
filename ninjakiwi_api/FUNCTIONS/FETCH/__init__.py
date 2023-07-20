@@ -1,3 +1,5 @@
 """FUNCTION-level package for NinjaKiwi API."""
 
-from .function import api_fetch
+from .function import _api_fetch
+
+__all__ = ["_api_fetch"]
