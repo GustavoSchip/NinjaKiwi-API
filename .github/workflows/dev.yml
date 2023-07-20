@@ -16,6 +16,17 @@ jobs:
     permissions:
       id-token: write
       contents: read
+      deployments: write
+      packages: write
+      issues: write
+      pull-requests: write
+      pages: write
+      repository-projects: write
+      actions: write
+      checks: write
+      discussions: write
+      security-events: write
+      statuses: write
     strategy:
       matrix:
         python-versions: ['3.11']
