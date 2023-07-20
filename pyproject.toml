@@ -22,8 +22,8 @@ packages = [
 [tool.poetry.dependencies]
 python = ">=3.11,<4.0.0"
 
-asyncio  = {version = "^3.4.3", optional = true}
-aiohttp  = { version = "^3.8.1", optional = true}
+asyncio  = {version = "^3.4.3"}
+aiohttp  = { version = "^3.8.1"}
 black  = { version = "^22.3.0", optional = true}
 isort  = { version = "5.10.1", optional = true}
 flake8  = { version = "4.0.1", optional = true}
