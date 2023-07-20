@@ -31,6 +31,9 @@ jobs:
       matrix:
         python-versions: ['3.11']
 
+    env:
+      PYTEST_BTD6_USER_ID: ${{ secrets.PYTEST_BTD6_USER_ID }}
+
     outputs:
       package_version: ${{ steps.variables_step.outputs.package_version }}
       package_name: ${{ steps.variables_step.outputs.package_name }}
