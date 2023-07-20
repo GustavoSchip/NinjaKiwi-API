@@ -13,11 +13,31 @@
 
 <br>
 
+This project was born because of the need of an API wrapper for the NinjaKiwi API. (A.K.A. OpenDATA)
+<br>
+Do note that this is my first ever library and I still have a lot to learn!
+
 # Usage
 
-...
+To import the module use:
+<br>
+
+```python
+import ninjakiwi_api
+```
+
+All the functions, models/classes and attributes are as followed:
+
+```python
+"""
+TODO
+"""
+```
 
 # Example
+
+In this example we make a request to the api and we want the value of `id`.
+<br>
 
 ```python
 import asyncio
