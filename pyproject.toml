@@ -1,18 +1,27 @@
 [tool]
 [tool.poetry]
 name = "ninjakiwi_api"
-version = "0.0.3"
+version = "0.0.4"
 homepage = "https://github.com/GustavoSchip/ninjakiwi_api"
-description = "Skeleton project created by Python Project Wizard (ppw)."
-authors = ["Gustavo Schip <gustavoschip@proton.me>"]
+description = "NinjaKiwi API (OpenDATA) for Python! (My first library)"
+authors = [
+    "Gustavo Schip <gustavoschip@proton.me>",
+]
+maintainers = [
+    "Gustavo Schip <gustavoschip@proton.me>",
+]
 readme = "README.md"
 license =  "MIT"
-classifiers=[
+classifiers = [
     'Development Status :: 2 - Pre-Alpha',
     'Intended Audience :: Developers',
     'License :: OSI Approved :: MIT License',
     'Natural Language :: English',
     'Programming Language :: Python :: 3.11',
+]
+keywords = [
+    "NinjaKiwi",
+    "API",
 ]
 packages = [
     { include = "ninjakiwi_api" },
