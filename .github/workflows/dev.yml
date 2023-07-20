@@ -13,8 +13,8 @@ on:
 
 jobs:
   test:
-    permissions:
-      id-token: write
+#    permissions:
+#      id-token: write
     strategy:
       matrix:
         python-versions: ['3.11']
