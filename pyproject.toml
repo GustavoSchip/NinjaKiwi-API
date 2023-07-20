@@ -1,7 +1,7 @@
 [tool]
 [tool.poetry]
 name = "ninjakiwi_api"
-version = "0.0.6"
+version = "0.0.7"
 homepage = "https://github.com/GustavoSchip/ninjakiwi_api"
 description = "NinjaKiwi API (OpenDATA) for Python! (My first library)"
 authors = [
@@ -43,18 +43,11 @@ pytest-cov  = { version = "^3.0.0", optional = true}
 tox  = { version = "^3.24.5", optional = true}
 virtualenv  = { version = "^20.13.1", optional = true}
 pip  = { version = "^22.0.3"}
-mkdocs  = { version = "^1.2.3", optional = true}
-mkdocs-include-markdown-plugin  = { version = "^3.2.3", optional = true}
-mkdocs-material  = { version = "^8.1.11", optional = true}
-mkdocstrings  = { version = "^0.18.0", optional = true}
-mkdocs-material-extensions  = { version = "^1.0.3", optional = true}
 twine  = { version = "^3.8.0", optional = true}
-mkdocs-autorefs = {version = "^0.3.1", optional = true}
 pre-commit = {version = "^2.17.0", optional = true}
 toml = {version = "^0.10.2", optional = true}
 livereload = {version = "^2.6.3", optional = true}
 pyreadline = {version = "^2.1", optional = true}
-mike = { version="^1.1.2", optional=true}
 tornado = {version = "^6.2", optional = true}
 
 [tool.poetry.extras]
@@ -69,19 +62,6 @@ test = [
     ]
 
 dev = ["tox", "pre-commit", "virtualenv", "pip", "twine", "toml"]
-
-doc = [
-    "pkginfo",
-    "mkdocs",
-    "mkdocs-include-markdown-plugin",
-    "mkdocs-material",
-    "mkdocstrings",
-    "mkdocs-material-extension",
-    "mkdocs-autorefs",
-    "mike"
-    ]
-
-
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
