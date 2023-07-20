@@ -22,4 +22,5 @@ exclude =
     .vscode,
     .idea,
     .github,
-    tests
+    tests,
+    README.md
