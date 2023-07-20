@@ -10,24 +10,24 @@ on:
 
   workflow_dispatch:
 
+permissions:
+  id-token: write
+  contents: read
+  deployments: write
+  packages: write
+  issues: write
+  pull-requests: write
+  pages: write
+  repository-projects: write
+  actions: write
+  checks: write
+  discussions: write
+  security-events: write
+  statuses: write
+
 jobs:
   release:
     runs-on: ubuntu-latest
-
-    permissions:
-      id-token: write
-      contents: read
-      deployments: write
-      packages: write
-      issues: write
-      pull-requests: write
-      pages: write
-      repository-projects: write
-      actions: write
-      checks: write
-      discussions: write
-      security-events: write
-      statuses: write
 
     strategy:
       matrix:
