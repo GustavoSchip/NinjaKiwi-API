@@ -91,6 +91,7 @@ async def test_fetch_btd6_odyssey():
 
 
 @pytest.mark.asyncio
+@pytest.mark.skipif(not environ.get("PYTEST_BTD6_USER_ID"), reason="PYTEST_BTD6_USER_ID environment variable not found")
 async def test_fetch_btdb2_users():
     """Test fetching user data for BTDB2."""
     options = {
