@@ -2,7 +2,7 @@
 
 from typing import Optional
 
-from ninjakiwi_api.FUNCTIONS.FETCH.model import _model
+from ninjakiwi_api.FUNCTIONS.FETCH.model import model
 
 from .API import _btd6_url_factory, _btdb2_url_factory
 from .FUNCTIONS import _api_fetch, _error_handler
@@ -22,7 +22,7 @@ async def _game_to_func(game: str, data: str, **options) -> str | None:
         return None
 
 
-async def fetch(game: str, data: str, **options) -> Optional[_model] | None:
+async def fetch(game: str, data: str, **options) -> Optional[model] | None:
     """
     Asynchronously fetches data from the NinjaKiwi API based on the specified game and data type.
 
@@ -49,7 +49,7 @@ async def fetch(game: str, data: str, **options) -> Optional[_model] | None:
 
     Returns
     -------
-    Optional[_model] | None
+    Optional[model] | None
         A Union containing the fetched data if successful, or None if the data could not be fetched.
 
     Raises

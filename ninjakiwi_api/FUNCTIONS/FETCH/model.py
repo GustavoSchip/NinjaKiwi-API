@@ -6,7 +6,7 @@ from typing import List, Optional, Union
 import aiohttp
 
 
-class _model:
+class model:
     """
     Represents a data model with methods to access and retrieve information from the data.
 
@@ -19,15 +19,15 @@ class _model:
 
     Attributes
     ----------
-    response : aiohttp.ClientResponse
+    _response : aiohttp.ClientResponse
         The HTTP response object.
-    data : dict
+    _data : dict
         The decoded JSON data containing the information.
     """
 
     def __init__(self, data: dict, response: aiohttp.ClientResponse):
-        self.response = response
-        self.data = data
+        self._response = response
+        self._data = data
 
     async def get_raw_data(self) -> dict | None:
         """
@@ -39,7 +39,7 @@ class _model:
             The raw JSON data as a Python dictionary, or None if there was an error
             retrieving the data.
         """
-        return await self.response.json()
+        return await self._response.json()
 
     async def get_data(
         self, name: str
@@ -73,13 +73,46 @@ class _model:
                     results.extend(traverse(item, target_name))
             return results
 
-        results = traverse(self.data, name)
+        results = traverse(self._data, name)
         return results if results else None
+
+    async def get_homid(self, number: int) -> Union[str, None]:
+        """
+        Get the 'homid' (hashed object ID) at the specified index.
+
+        Parameters
+        ----------
+        number : int
+            The index of the 'homid' to retrieve.
+
+        Returns
+        -------
+        Union[str, None]
+            The 'homid' at the specified index as a string if found,
+            None if the index is out of range or if the data is not available.
+
+        Raises
+        ------
+            None.
+        """
+        result = []
+        names = await self.get_data("name")
+        if isinstance(names, list):
+            try:
+                result = [str(names[number])]
+            except (IndexError, KeyError, TypeError):
+                result = None
+            if result is not None:
+                if isinstance(result[0], str):
+                    result[0] = result[0].lower().replace(" ", "_")
+                    result = result[0]
+
+        return result if result else None
 
 
 async def _handler(
     data: dict | None, response: aiohttp.ClientResponse | None
-) -> Optional[_model] | None:
+) -> Optional[model] | None:
     if data is None or response is None:
         return None
-    return _model(data, response)
+    return model(data, response)

@@ -125,7 +125,9 @@ async def _btd6_url_factory(data: str, **options) -> Optional[str]:
                     elif teamSize is None:
                         teamSize = 1
                     else:
-                        teamSize = int(teamSize)  # TODO : Warn about unsupported teamsize size!
+                        teamSize = int(
+                            teamSize
+                        )  # TODO : Warn about unsupported teamsize size!
 
                     type_ = type_.lower()
 
