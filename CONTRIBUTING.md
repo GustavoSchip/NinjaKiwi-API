@@ -106,21 +106,24 @@ Before you submit a pull request, check that it meets these guidelines:
    https://github.com/GustavoSchip/ninjakiwi-api/actions
    and make sure that the tests pass for all supported Python versions.
 
-## Tips```
-    $ pytest tests.test_ninjakiwi_api
-```To run a subset of tests.
+## Tips
 
+To run a subset of tests.
+
+```
+    $ pytest
+```
 
 ## Deploying
 
 A reminder for the maintainers on how to deploy.
-Make sure all your changes are committed (including an entry in HISTORY.md).
+Make sure all your changes are committed and are in a PR.
 Then run:
 
 ```
-$ poetry patch # possible: major / minor / patch
-$ git push
-$ git push --tags
+    $ poetry patch # possible: major / minor / patch
+    $ git push
+    $ git push --tags
 ```
 
-Github Actions will then deploy to PyPI if tests pass.
+GitHub Actions will then deploy to PyPI if tests pass. (If merged!)
