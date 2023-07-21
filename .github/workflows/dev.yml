@@ -43,6 +43,7 @@ jobs:
       package_name: ${{ steps.variables_step.outputs.package_name }}
       repo_name: ${{ steps.variables_step.outputs.repo_name }}
       repo_owner: ${{ steps.variables_step.outputs.repo_owner }}
+      repo_tag: ${{ steps.variables_step.outputs.repo_tag }}
 
     steps:
       - uses: actions/checkout@v3
@@ -68,6 +69,15 @@ jobs:
           echo "package_name=${PACKAGE_NAME}" >> "$GITHUB_OUTPUT"
           PACKAGE_VERSION=$(poetry version --short)
           echo "package_version=${PACKAGE_VERSION}" >> "$GITHUB_OUTPUT"
+          if git show-ref --tags --quiet --verify -- "refs/tags/v${PACKAGE_VERSION}-dev"; then
+            echo "Tag v${PACKAGE_VERSION}-dev found."
+            TAG_FOUND=true
+          else
+            echo "Tag v${PACKAGE_VERSION}-dev not found."
+            TAG_FOUND=false
+          fi
+          REPO_TAG=${TAG_FOUND}
+          echo "repo_tag=${REPO_TAG}" >> "$GITHUB_OUTPUT"
         shell: bash
 
       - name: test with tox
@@ -78,6 +88,13 @@ jobs:
         run: |
           poetry lock
           poetry build
+
+      - uses: dev-drprasad/delete-tag-and-release@v1
+        if: steps.variables_step.outputs.repo_tag == 'true'
+        with:
+          tag_name: v${{ steps.variables_step.outputs.package_version }}-dev
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          delete_release: true
 
       - name: Create Release
         if: github.ref == 'refs/heads/merge'
