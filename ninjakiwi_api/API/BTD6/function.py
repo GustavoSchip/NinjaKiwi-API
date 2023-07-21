@@ -1,6 +1,5 @@
 """API-level package for NinjaKiwi API."""
 
-import re
 from enum import Enum
 from typing import Optional
 
@@ -100,6 +99,9 @@ async def _btd6_url_factory(data: str, **options) -> Optional[str]:
         "challenges",
         "ct",
         "odyssey",
+        "users",
+        "guild",
+        "save",
     ]
 
     if data not in types:
@@ -113,16 +115,25 @@ async def _btd6_url_factory(data: str, **options) -> Optional[str]:
     if data == "bosses":
         bossID = options.get("bossID")
         if bossID is not None:
-            bossID_pattern = re.compile(r"^[A-Za-z0-9_-]+$")
-            if not bossID_pattern.match(bossID):
-                return None
+            if all(c.isalnum() or c in "_-" for c in bossID):
+                type_ = options.get("type")
+                teamSize = options.get("teamSize")
+                if type_ is not None:
+                    type_ = type_.upper()
+                    if type_ not in _BossEvent.__members__:
+                        return None
+                    elif teamSize is None:
+                        teamSize = 1
+                    else:
+                        teamSize = int(teamSize)  # TODO : Warn about unsupported teamsize size!
 
-            type_ = options.get("type")
-            teamSize = options.get("teamSize")
-            if type_ not in _BossEvent.__members__ or teamSize != "1":
-                return None
+                    type_ = type_.lower()
 
-            return f"{base_url}/{bossID}/leaderboard/{type_}/{teamSize}"
+                    return f"{base_url}/{bossID}/leaderboard/{type_}/{teamSize}"
+                else:
+                    return None
+            else:
+                return None
         else:
             return base_url
 
@@ -141,43 +152,60 @@ async def _btd6_url_factory(data: str, **options) -> Optional[str]:
     if data == "ct":
         ctID = options.get("ctID")
         if ctID is not None:
-            return f"{base_url}/{ctID}/leaderboard/player"
+            if all(c.isalnum() or c in "_-" for c in ctID):
+                return f"{base_url}/{ctID}/leaderboard/player"
+            else:
+                return None
         else:
             return base_url
 
     if data == "odyssey":
         odysseyID = options.get("odysseyID")
         difficulty = options.get("difficulty")
-        if odysseyID is not None and difficulty in _OdysseyDifficulty.__members__:
-            maps = options.get("maps")
-            if maps is not None:
-                return f"{base_url}/{odysseyID}/{difficulty}/maps"
+        if odysseyID is not None:
+            difficulty = difficulty.upper()
+            if difficulty is not None:
+                if difficulty in _OdysseyDifficulty.__members__:
+                    difficulty = difficulty.lower()
+                    maps = options.get("maps")
+                    if maps is not None:
+                        return f"{base_url}/{odysseyID}/{difficulty}/maps"
+                    else:
+                        return f"{base_url}/{odysseyID}/{difficulty}"
+                else:
+                    return None
             else:
-                return f"{base_url}/{odysseyID}/{difficulty}"
+                return None
         else:
             return base_url
 
     if data == "users":
         userID = options.get("userID")
-        userID_pattern = re.compile(r"^[A-Za-z0-9_-]+$")
-        if userID is not None and userID_pattern.match(userID):
-            return f"{base_url}/{userID}"
+        if userID is not None:
+            if all(c.isalnum() or c in "_-" for c in userID):
+                return f"{base_url}/{userID}"
+            else:
+                return None
         else:
             return None
 
     if data == "guild":
         guildID = options.get("guildID")
-        guildID_pattern = re.compile(r"^[A-Za-z0-9_-]+$")
-        if guildID is not None and guildID_pattern.match(guildID):
-            return f"{base_url}/{guildID}"
+        if guildID is not None:
+            if all(c.isalnum() or c in "_-" for c in guildID):
+                return f"{base_url}/{guildID}"
+            else:
+                return None
         else:
             return None
 
     if data == "save":
         oakID = options.get("oakID")
-        oakID_pattern = re.compile(r"^[A-Za-z0-9_-]+$")
-        if oakID is not None and oakID_pattern.match(oakID):
-            return f"{base_url}/{oakID}"
+        if oakID is not None:
+            if all(c.isalnum() or c in "_-" for c in oakID):
+                return f"{base_url}/{oakID}"
+            else:
+                return None
         else:
             return None
 

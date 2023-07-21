@@ -1,6 +1,5 @@
 """API-level package for NinjaKiwi API."""
 
-import re
 from enum import Enum
 from typing import Optional
 
@@ -61,19 +60,21 @@ async def _btdb2_url_factory(data: str, **options) -> Optional[str]:
     if data == "homs":
         homID = options.get("homID")
         if homID is not None:
-            homID_pattern = re.compile(r"^[A-Za-z0-9_-]+$")
-            if not homID_pattern.match(homID):
+            if all(c.isalnum() or c in "_-" for c in homID):
+                return f"{base_url}/{homID}/leaderboard"
+            else:
                 return None
-            return f"{base_url}/{homID}/leaderboard"
         else:
             return base_url
 
     if data == "users":
         userID = options.get("userID")
-        userID_pattern = re.compile(r"^[A-Za-z0-9_-]+$")
-        if userID is not None and userID_pattern.match(userID):
-            return f"{base_url}/{userID}"
-
-        return None
+        if userID is not None:
+            if all(c.isalnum() or c in "_-" for c in userID):
+                return f"{base_url}/{userID}"
+            else:
+                return None
+        else:
+            return None
 
     return None
