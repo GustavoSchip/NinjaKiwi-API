@@ -146,6 +146,19 @@ else:
     print("Failed to fetch specific data.")
 ```
 
+Fetch homID data for BTDB2 and get the second entry in the specific type of data:
+<br>
+
+```python
+instance_of_model = await fetch("BTDB2", "homs")
+
+specific_data = await instance_of_model.get_homid(number=1)
+if specific_data is not None:
+    print(f"Specific data: {specific_data}")
+else:
+    print("Failed to fetch specific data.")
+```
+
 # Example
 
 In this example we make a request to the api and we want the value of `id`.
