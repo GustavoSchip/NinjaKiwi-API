@@ -68,6 +68,37 @@ jobs:
       - name: test with tox
         run: tox
 
+      - name: Build wheels and source tarball
+        if: github.ref == 'refs/heads/merge'
+        run: |
+          poetry lock
+          poetry build
+
+      - name: Create Release
+        if: github.ref == 'refs/heads/merge'
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ steps.variables_step.outputs.package_version }}-dev
+          release_name: Release v${{ steps.variables_step.outputs.package_version }}-dev
+          body: ${{ steps.build_changelog.outputs.changelog }}
+          draft: false
+          prerelease: true
+
+      - name: Upload Release Asset
+        if: github.ref == 'refs/heads/merge'
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./dist/${{ steps.variables_step.outputs.package_name }}-${{ steps.variables_step.outputs.package_version }}.tar.gz
+          asset_name: ${{ steps.variables_step.outputs.package_name }}-${{ steps.variables_step.outputs.package_version }}.tar.gz
+          asset_content_type: application/x-compressed-tar
+
 #  publish_dev_build:
 #    needs: test
 #    runs-on: ubuntu-latest
