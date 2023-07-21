@@ -53,7 +53,7 @@ async def test_get_data():
 
     level = await my_model.get_data("info")
     print(level)
-    assert level == [{'level': 10, 'status': 'active'}]
+    assert level == [{"level": 10, "status": "active"}]
 
     invalid_name = await my_model.get_data("invalid_name")
     assert invalid_name is None
@@ -63,12 +63,12 @@ async def test_get_data():
 async def test_get_homid():
     """Test for get_homid"""
     data = {
-      "id": "lj44j3vt",
-      "name": "Season 13",
-      "start": 1687428000000,
-      "end": 1692180000000,
-      "totalScores": 254,
-      "leaderboard": "https://data.ninjakiwi.com/battles2/homs/season_12/leaderboard"
+        "id": "lj44j3vt",
+        "name": "Season 13",
+        "start": 1687428000000,
+        "end": 1692180000000,
+        "totalScores": 254,
+        "leaderboard": "https://data.ninjakiwi.com/battles2/homs/season_12/leaderboard",
     }
 
     request = test_utils.make_mocked_request("GET", "/test")
