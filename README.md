@@ -47,7 +47,7 @@ The [`fetch`](https://github.com/GustavoSchip/NinjaKiwi-API/blob/master/ninjakiw
 
 **Returns:**
 
-`Optional[_model] | None`: A Union containing the fetched data as an instance of the `_model` class if successful, or None if the data could not be fetched.
+`Optional[model] | None`: A Union containing the fetched data as an instance of the `_model` class if successful, or None if the data could not be fetched.
 
 **Raises:**
 
@@ -96,9 +96,9 @@ else:
     print("Failed to fetch HOM leaderboard.")
 ```
 
-### `_model` Class
+### `model` Class
 
-The [`_model`](https://github.com/GustavoSchip/NinjaKiwi-API/blob/master/ninjakiwi_api/FUNCTIONS/FETCH/model.py) class represents a data model with methods to access and retrieve information from the data.
+The [`model`](https://github.com/GustavoSchip/NinjaKiwi-API/blob/master/ninjakiwi_api/FUNCTIONS/FETCH/model.py) class represents a data model with methods to access and retrieve information from the data.
 
 **Parameters:**
 
@@ -107,14 +107,16 @@ The [`_model`](https://github.com/GustavoSchip/NinjaKiwi-API/blob/master/ninjaki
 
 **Attributes:**
 
-- `response` (aiohttp.ClientResponse): The HTTP response object.
-- `data` (dict): The decoded JSON data containing the information.
+- `_response` (aiohttp.ClientResponse): The HTTP response object.
+- `_data` (dict): The decoded JSON data containing the information.
 
 **Methods:**
 
 - `async def get_raw_data(self) -> dict | None`: Get the raw JSON data from the HTTP response. Returns the raw JSON data as a Python dictionary, or None if there was an error retrieving the data.
 
 - `async def get_data(self, name: str) -> List[Union[dict, list, str, int, float, bool, None]] | None`: Get the values corresponding to the given name from the data. Returns the values corresponding to the given name as a list. Returns None if no matching entries are found in the data or if all matching entries have a value of None.
+
+- `async def get_homid(self, number: int) -> Union[str, None]`: Get the 'homid' (hashed object ID) at the specified index. Returns The 'homid' at the specified index as a string if found, None if the index is out of range or if the data is not available.
 
 **Examples:**
 
