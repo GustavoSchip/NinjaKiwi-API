@@ -89,7 +89,7 @@ jobs:
           poetry lock
           poetry build
 
-      - uses: dev-drprasad/delete-tag-and-release@v1
+      - uses: dev-drprasad/delete-tag-and-release@v1.0
         if: steps.variables_step.outputs.repo_tag == 'true'
         with:
           tag_name: v${{ steps.variables_step.outputs.package_version }}-dev
