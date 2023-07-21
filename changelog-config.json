@@ -1,0 +1,48 @@
+{
+  "categories": [
+    {
+      "title": "## 🚀 Features",
+      "labels": ["feature"]
+    },
+    {
+      "title": "## 🐛 Fixes",
+      "labels": ["fix"]
+    },
+    {
+      "title": "## 🔄 Dependency Updates",
+      "labels": ["dependencies"]
+    },
+    {
+      "title": "## 🧪 Tests",
+      "labels": ["test"]
+    },
+    {
+      "title": "## Other Changes",
+      "labels": ["other"]
+    }
+  ],
+  "label_extractor": [
+    {
+      "pattern": "\\[Feature\\]",
+      "target": "feature"
+    },
+    {
+      "pattern": "\\[Fix\\]",
+      "target": "fix"
+    },
+    {
+      "pattern": "\\[Dependabot\\]",
+      "target": "dependencies"
+    },
+    {
+      "pattern": "\\[Test\\]",
+      "target": "test"
+    }
+  ],
+  "exclude_labels": ["ignore"],
+  "sort": {
+    "order": "DESC",
+    "on_property": "committed_date"
+  },
+  "template": "${{CHANGELOG}}\n\n<details>\n<summary>Other Changes</summary>\n\n${{UNCATEGORIZED}}\n</details>"
+}

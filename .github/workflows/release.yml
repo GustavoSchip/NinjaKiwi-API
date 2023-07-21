@@ -48,6 +48,8 @@ jobs:
       - name: build change log
         id: build_changelog
         uses: mikepenz/release-changelog-builder-action@v3.7.2
+        with:
+            configuration: changelog-config.json
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
