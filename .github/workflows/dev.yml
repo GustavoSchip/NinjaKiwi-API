@@ -4,9 +4,11 @@ on:
   push:
     branches:
       - '*'
+
   pull_request:
     branches:
       - '*'
+
   workflow_dispatch:
 
 permissions:
@@ -26,7 +28,6 @@ permissions:
 
 jobs:
   test:
-
     strategy:
       matrix:
         python-versions: ['3.11']
@@ -45,6 +46,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
       - uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-versions }}
