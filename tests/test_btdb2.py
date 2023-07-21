@@ -24,8 +24,8 @@ async def test_homs_url_with_invalid_homID():
 @pytest.mark.asyncio
 async def test_users_url_with_valid_userID():
     """Test for valid "users" URL with a valid userID."""
-    url = await _btdb2_url_factory("users", userID="user123")
-    assert url == "https://data.ninjakiwi.com/battles2/users/user123"
+    url = await _btdb2_url_factory("users", userID="oak_cce22SUMHERE")
+    assert url == "https://data.ninjakiwi.com/battles2/users/oak_cce22SUMHERE"
 
 
 @pytest.mark.asyncio

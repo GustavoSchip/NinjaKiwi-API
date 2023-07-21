@@ -11,51 +11,48 @@ async def _error_handler(
 
     if act == "http":
         if response is not None:
-            data = await response.json()
-            status = response.status
+            try:
+                data = await response.json()
+            except AttributeError:
+                data = None
+            try:
+                status = response.status
+            except (KeyError, AttributeError):
+                status = None
 
-            if status != 200:
-                if status == 401:
+            if status is not None:
+                if data is None:
+                    raise Exception("No valid data!")
+                if status == 200:
                     try:
                         err = str(data["error"])
                     except KeyError:
                         err = status
-                if status == 403:
+                elif status == 404:
                     try:
-                        err = str(data["error"])
+                        err = await response.read()
                     except KeyError:
                         err = status
-                if status == 404:
+                elif status == 500:
                     try:
-                        err = str(data["error"])
+                        err = await response.read()
                     except KeyError:
                         err = status
-                if status == 413:
-                    try:
-                        err = str(data["error"])
-                    except KeyError:
-                        err = status
-                if status == 500:
-                    try:
-                        err = str(data["error"])
-                    except KeyError:
-                        err = status
-                if status == 503:
-                    try:
-                        err = str(data["error"])
-                    except KeyError:
-                        err = status
-                if status == 504:
-                    try:
-                        err = str(data["error"])
-                    except KeyError:
-                        err = status
-
+                else:
+                    raise Exception("Not a valid HTTP status!")
+            else:
+                raise Exception("Not a valid HTTP response!")
         else:
-            raise Exception
+            raise Exception("Not a valid HTTP response!")
 
     elif act == "str":
-        err = exception
+        if exception is not None and isinstance(exception, str):
+            err = exception
+        else:
+            raise Exception("Not a valid exception!")
+
+    else:
+        raise Exception("Not a valid action!")
 
     if err is not None:
         raise Warning(err)

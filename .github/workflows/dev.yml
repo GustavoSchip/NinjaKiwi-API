@@ -4,9 +4,11 @@ on:
   push:
     branches:
       - '*'
+
   pull_request:
     branches:
       - '*'
+
   workflow_dispatch:
 
 permissions:
@@ -26,7 +28,6 @@ permissions:
 
 jobs:
   test:
-
     strategy:
       matrix:
         python-versions: ['3.11']
@@ -42,9 +43,13 @@ jobs:
       package_name: ${{ steps.variables_step.outputs.package_name }}
       repo_name: ${{ steps.variables_step.outputs.repo_name }}
       repo_owner: ${{ steps.variables_step.outputs.repo_owner }}
+      repo_tag: ${{ steps.variables_step.outputs.repo_tag }}
 
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
       - uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-versions }}
@@ -60,13 +65,62 @@ jobs:
           echo "repo_owner=${GITHUB_REPOSITORY%/*}" >> "$GITHUB_OUTPUT"
           echo "repo_name=${GITHUB_REPOSITORY#*/}" >> "$GITHUB_OUTPUT"
           PACKAGE_NAME=$(poetry version | awk '{print $1}')
+          PACKAGE_NAME=${PACKAGE_NAME//-/_}
           echo "package_name=${PACKAGE_NAME}" >> "$GITHUB_OUTPUT"
           PACKAGE_VERSION=$(poetry version --short)
           echo "package_version=${PACKAGE_VERSION}" >> "$GITHUB_OUTPUT"
+          if git show-ref --tags --quiet --verify -- "refs/tags/v${PACKAGE_VERSION}-dev"; then
+            echo "Tag v${PACKAGE_VERSION}-dev found."
+            TAG_FOUND=true
+          else
+            echo "Tag v${PACKAGE_VERSION}-dev not found."
+            TAG_FOUND=false
+          fi
+          REPO_TAG=${TAG_FOUND}
+          echo "repo_tag=${REPO_TAG}" >> "$GITHUB_OUTPUT"
         shell: bash
 
       - name: test with tox
         run: tox
+
+      - name: Build wheels and source tarball
+        if: github.ref == 'refs/heads/merge'
+        run: |
+          poetry lock
+          poetry build
+
+      - name: Delete Release and Tag
+        uses: dev-drprasad/delete-tag-and-release@v1.0
+        if: steps.variables_step.outputs.repo_tag == 'true' && github.ref == 'refs/heads/merge'
+        with:
+          tag_name: v${{ steps.variables_step.outputs.package_version }}-dev
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          delete_release: true
+
+      - name: Create Release
+        if: github.ref == 'refs/heads/merge'
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ steps.variables_step.outputs.package_version }}-dev
+          release_name: Release v${{ steps.variables_step.outputs.package_version }}-dev
+          body: ${{ steps.build_changelog.outputs.changelog }}
+          draft: false
+          prerelease: true
+
+      - name: Upload Release Asset
+        if: github.ref == 'refs/heads/merge'
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ github.workspace }}/dist/${{ steps.variables_step.outputs.package_name }}-${{ steps.variables_step.outputs.package_version }}.tar.gz
+          asset_name: ${{ steps.variables_step.outputs.package_name }}-${{ steps.variables_step.outputs.package_version }}.tar.gz
+          asset_content_type: application/x-compressed-tar
 
 #  publish_dev_build:
 #    needs: test

@@ -68,6 +68,7 @@ jobs:
           echo "repo_owner=${GITHUB_REPOSITORY%/*}" >> "$GITHUB_OUTPUT"
           echo "repo_name=${GITHUB_REPOSITORY#*/}" >> "$GITHUB_OUTPUT"
           PACKAGE_NAME=$(poetry version | awk '{print $1}')
+          PACKAGE_NAME=${PACKAGE_NAME//-/_}
           echo "package_name=${PACKAGE_NAME}" >> "$GITHUB_OUTPUT"
           PACKAGE_VERSION=$(poetry version --short)
           echo "package_version=${PACKAGE_VERSION}" >> "$GITHUB_OUTPUT"
@@ -89,6 +90,17 @@ jobs:
           body: ${{ steps.build_changelog.outputs.changelog }}
           draft: false
           prerelease: false
+
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ github.workspace }}/dist/${{ steps.variables_step.outputs.package_name }}-${{ steps.variables_step.outputs.package_version }}.tar.gz
+          asset_name: ${{ steps.variables_step.outputs.package_name }}-${{ steps.variables_step.outputs.package_version }}.tar.gz
+          asset_content_type: application/x-compressed-tar
 
       - name: publish to PYPI
         uses: pypa/gh-action-pypi-publish@release/v1
