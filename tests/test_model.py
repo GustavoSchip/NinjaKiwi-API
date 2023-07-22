@@ -24,7 +24,6 @@ async def test_get_raw_data():
     my_model = model(data, request)
 
     raw_data = await my_model.get_raw_data()
-    print(raw_data)
     assert raw_data == data
 
 
@@ -44,15 +43,12 @@ async def test_get_data():
     my_model = model(data, request)
 
     names = await my_model.get_data("name")
-    print(names)
     assert names == [["Ninja", "Monkey", "Banana"]]
 
     scores = await my_model.get_data("score")
-    print(scores)
     assert scores == [[100, 200, 50]]
 
     level = await my_model.get_data("info")
-    print(level)
     assert level == [{"level": 10, "status": "active"}]
 
     invalid_name = await my_model.get_data("invalid_name")
@@ -78,9 +74,7 @@ async def test_get_homid():
     my_model = model(data, request)
 
     homid_1 = await my_model.get_homid(0)
-    print(homid_1)
     assert homid_1 == "season_13"
 
     homid_2 = await my_model.get_homid(1)
-    print(homid_2)
     assert homid_2 is None
