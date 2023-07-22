@@ -1,7 +1,7 @@
 [tool]
 [tool.poetry]
 name = "ninjakiwi_api"
-version = "1.1.0a0"
+version = "1.2.0a0"
 homepage = "https://github.com/GustavoSchip/ninjakiwi-api"
 description = "NinjaKiwi API (Open Data) for Python! (My first library)"
 authors = [
