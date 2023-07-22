@@ -5,7 +5,7 @@
 import pytest
 from aiohttp import test_utils
 
-from ninjakiwi_api.FUNCTIONS.FETCH.model import model
+from ninjakiwi_api.FUNCTIONS.FETCH.model import model, btd6_model, btdb2_model
 
 
 @pytest.mark.asyncio
@@ -71,7 +71,7 @@ async def test_get_homid():
     request.json = test_utils.make_mocked_coro(return_value=data)
     request.status = 200
 
-    my_model = model(data, request)
+    my_model = btdb2_model(data, request)
 
     homid_1 = await my_model.get_homid(0)
     assert homid_1 == "season_13"
@@ -96,7 +96,7 @@ async def test_get_next_season():
     request.json = test_utils.make_mocked_coro(return_value=data)
     request.status = 200
 
-    my_model = model(data, request)
+    my_model = btdb2_model(data, request)
 
     future_season = await my_model.get_next_season()
     assert future_season == "season_13"
@@ -128,7 +128,7 @@ async def test_get_current_season():
     request.json = test_utils.make_mocked_coro(return_value=data)
     request.status = 200
 
-    my_model = model(data, request)
+    my_model = btdb2_model(data, request)
 
     future_season = await my_model.get_current_season()
     assert future_season == "season_12"
@@ -168,7 +168,7 @@ async def test_get_previous_season():
     request.json = test_utils.make_mocked_coro(return_value=data)
     request.status = 200
 
-    my_model = model(data, request)
+    my_model = btdb2_model(data, request)
 
     future_season = await my_model.get_previous_season()
     assert future_season == "season_11"
