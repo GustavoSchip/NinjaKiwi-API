@@ -76,6 +76,19 @@ class model:
         results = traverse(self._data, name)
         return results if results else None
 
+
+class btd6_model(model):
+    def __init__(self, data: dict, response: aiohttp.ClientResponse):
+        super().__init__(data, response)
+
+    async def get_user(self):
+        pass
+
+
+class btdb2_model(model):
+    def __init__(self, data: dict, response: aiohttp.ClientResponse):
+        super().__init__(data, response)
+
     async def get_homid(self, number: int) -> Union[str, None]:
         """
         Get the 'homid' (hashed object ID) at the specified index.
@@ -152,9 +165,24 @@ class model:
             return None
 
 
-async def _handler(
-    data: dict | None, response: aiohttp.ClientResponse | None
+async def _model_handler(
+    data: dict | None, response: aiohttp.ClientResponse | None, game: str | None
 ) -> Optional[model] | None:
-    if data is None or response is None:
+    classes = {
+        "BTD6": btd6_model,
+        "BTDB2": btdb2_model,
+    }
+    if data is None or response is None or game is None:
         return None
-    return model(data, response)
+    for key, value in classes.items():
+        if key == game:
+            return value(data, response)
+    return None
+
+
+async def _handler(
+    data: dict | None, response: aiohttp.ClientResponse | None, game: str | None
+) -> Optional[model] | None:
+    if data is None or response is None or game is None:
+        return None
+    return await _model_handler(data, response, game)

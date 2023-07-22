@@ -8,7 +8,7 @@ from ninjakiwi_api.FUNCTIONS.ERROR import _error_handler
 from ninjakiwi_api.FUNCTIONS.FETCH.model import _handler, model
 
 
-async def _api_fetch(url: str) -> Optional[model] | None:
+async def _api_fetch(url: str, game: str) -> Optional[model] | None:
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as response:
             if response.status == 200:
@@ -16,7 +16,7 @@ async def _api_fetch(url: str) -> Optional[model] | None:
                 if data is not None:
                     if data["success"]:
                         try:
-                            return await _handler(data, response)
+                            return await _handler(data, response, game)
                         except Exception:
                             return await _error_handler(act="http", response=response)
                     else:
