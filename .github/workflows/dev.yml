@@ -2,8 +2,7 @@ name: dev build CI
 
 on:
   push:
-    branches:
-      - '*'
+    branches: [merge]
 
   pull_request:
     branches:
