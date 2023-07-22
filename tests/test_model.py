@@ -78,3 +78,97 @@ async def test_get_homid():
 
     homid_2 = await my_model.get_homid(1)
     assert homid_2 is None
+
+
+@pytest.mark.asyncio
+async def test_get_next_season():
+    """Test for get_next_season"""
+    data = {
+        "id": "lj44j3vt",
+        "name": "Season 13",
+        "start": 1687428000000,
+        "end": 1692180000000,
+        "totalScores": 254,
+        "leaderboard": "https://data.ninjakiwi.com/battles2/homs/season_12/leaderboard",
+    }
+
+    request = test_utils.make_mocked_request("GET", "/test")
+    request.json = test_utils.make_mocked_coro(return_value=data)
+    request.status = 200
+
+    my_model = model(data, request)
+
+    future_season = await my_model.get_next_season()
+    assert future_season == "season_13"
+
+
+@pytest.mark.asyncio
+async def test_get_current_season():
+    """Test for get_current_season"""
+    data = [
+        {
+            "id": "lj44j3vt",
+            "name": "Season 13",
+            "start": 1687428000000,
+            "end": 1692180000000,
+            "totalScores": 254,
+            "leaderboard": "https://data.ninjakiwi.com/battles2/homs/season_12/leaderboard",
+        },
+        {
+            "id": "41546",
+            "name": "Season 12",
+            "start": 1687428000000,
+            "end": 1692180000000,
+            "totalScores": 254,
+            "leaderboard": "https://data.ninjakiwi.com/battles2/homs/season_11/leaderboard",
+        },
+    ]
+
+    request = test_utils.make_mocked_request("GET", "/test")
+    request.json = test_utils.make_mocked_coro(return_value=data)
+    request.status = 200
+
+    my_model = model(data, request)
+
+    future_season = await my_model.get_current_season()
+    assert future_season == "season_12"
+
+
+@pytest.mark.asyncio
+async def test_get_previous_season():
+    """Test for get_previous_season"""
+    data = [
+        {
+            "id": "lj44j3vt",
+            "name": "Season 13",
+            "start": 1687428000000,
+            "end": 1692180000000,
+            "totalScores": 254,
+            "leaderboard": "https://data.ninjakiwi.com/battles2/homs/season_12/leaderboard",
+        },
+        {
+            "id": "54321",
+            "name": "Season 12",
+            "start": 0,
+            "end": 0,
+            "totalScores": 254,
+            "leaderboard": "https://data.ninjakiwi.com/battles2/homs/season_11/leaderboard",
+        },
+        {
+            "id": "12345",
+            "name": "Season 11",
+            "start": 0,
+            "end": 0,
+            "totalScores": 254,
+            "leaderboard": "https://data.ninjakiwi.com/battles2/homs/season_10/leaderboard",
+        },
+    ]
+
+    request = test_utils.make_mocked_request("GET", "/test")
+    request.json = test_utils.make_mocked_coro(return_value=data)
+    request.status = 200
+
+    my_model = model(data, request)
+
+    future_season = await my_model.get_previous_season()
+    assert future_season == "season_11"
