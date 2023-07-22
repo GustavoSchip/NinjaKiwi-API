@@ -97,6 +97,6 @@ async def fetch(game: str, data: str, **options) -> Optional[model] | None:
 
     url = await _game_to_func(game, data, **options)
     if url is not None:
-        return await _api_fetch(url)
+        return await _api_fetch(url, game)
     else:
         return None
