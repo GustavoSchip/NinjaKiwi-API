@@ -109,6 +109,48 @@ class model:
 
         return result if result else None
 
+    async def get_next_season(self) -> Union[str, None]:
+        """
+        Get the data for the next season.
+
+        Returns
+        -------
+        str or None
+            The data for the next season if available, or None if not found.
+        """
+        try:
+            return await self.get_homid(0)
+        except KeyError:
+            return None
+
+    async def get_current_season(self) -> Union[str, None]:
+        """
+        Get the data for the current season.
+
+        Returns
+        -------
+        str or None
+            The data for the current season if available, or None if not found.
+        """
+        try:
+            return await self.get_homid(1)
+        except KeyError:
+            return None
+
+    async def get_previous_season(self) -> Union[str, None]:
+        """
+        Get the data for the previous season.
+
+        Returns
+        -------
+        str or None
+            The data for the previous season if available, or None if not found.
+        """
+        try:
+            return await self.get_homid(2)
+        except KeyError:
+            return None
+
 
 async def _handler(
     data: dict | None, response: aiohttp.ClientResponse | None

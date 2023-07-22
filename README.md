@@ -33,11 +33,31 @@ To import the module use:
 import ninjakiwi_api
 ```
 
-To get the latest pre-release use:
+## installation
+
+To get the latest release use:
 <br>
 
 ```commandline
-python -m pip install --upgrade --pre https://github.com/GustavoSchip/NinjaKiwi-API/releases/download/v{VERSION-NUMBER-HERE}-dev/ninjakiwi_api-{VERSION-NUMBER-HERE}.tar.gz
+    $ python -m pip install --upgrade ninjakiwi-api
+```
+
+## Alternative installation
+
+To get the latest release via a tarball use: <br>
+To check which version the library is on go to [Releases](https://github.com/GustavoSchip/NinjaKiwi-API/releases) and search for releases!
+<br>
+
+```commandline
+    $ python -m pip install --upgrade https://github.com/GustavoSchip/NinjaKiwi-API/releases/download/v{VERSION-NUMBER-HERE}/ninjakiwi_api-{VERSION-NUMBER-HERE}.tar.gz
+```
+
+To get the latest pre-release via a tarball use: <br>
+To check which version the library (dev) is on go to [Releases](https://github.com/GustavoSchip/NinjaKiwi-API/releases) and search for pre-releases!
+<br>
+
+```commandline
+    $ python -m pip install --upgrade --pre https://github.com/GustavoSchip/NinjaKiwi-API/releases/download/v{VERSION-NUMBER-HERE}-dev/ninjakiwi_api-{VERSION-NUMBER-HERE}.tar.gz
 ```
 
 # Example

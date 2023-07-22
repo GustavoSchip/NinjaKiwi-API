@@ -24,7 +24,6 @@ async def test_get_raw_data():
     my_model = model(data, request)
 
     raw_data = await my_model.get_raw_data()
-    print(raw_data)
     assert raw_data == data
 
 
@@ -44,15 +43,12 @@ async def test_get_data():
     my_model = model(data, request)
 
     names = await my_model.get_data("name")
-    print(names)
     assert names == [["Ninja", "Monkey", "Banana"]]
 
     scores = await my_model.get_data("score")
-    print(scores)
     assert scores == [[100, 200, 50]]
 
     level = await my_model.get_data("info")
-    print(level)
     assert level == [{"level": 10, "status": "active"}]
 
     invalid_name = await my_model.get_data("invalid_name")
@@ -78,9 +74,101 @@ async def test_get_homid():
     my_model = model(data, request)
 
     homid_1 = await my_model.get_homid(0)
-    print(homid_1)
     assert homid_1 == "season_13"
 
     homid_2 = await my_model.get_homid(1)
-    print(homid_2)
     assert homid_2 is None
+
+
+@pytest.mark.asyncio
+async def test_get_next_season():
+    """Test for get_next_season"""
+    data = {
+        "id": "lj44j3vt",
+        "name": "Season 13",
+        "start": 1687428000000,
+        "end": 1692180000000,
+        "totalScores": 254,
+        "leaderboard": "https://data.ninjakiwi.com/battles2/homs/season_12/leaderboard",
+    }
+
+    request = test_utils.make_mocked_request("GET", "/test")
+    request.json = test_utils.make_mocked_coro(return_value=data)
+    request.status = 200
+
+    my_model = model(data, request)
+
+    future_season = await my_model.get_next_season()
+    assert future_season == "season_13"
+
+
+@pytest.mark.asyncio
+async def test_get_current_season():
+    """Test for get_current_season"""
+    data = [
+        {
+            "id": "lj44j3vt",
+            "name": "Season 13",
+            "start": 1687428000000,
+            "end": 1692180000000,
+            "totalScores": 254,
+            "leaderboard": "https://data.ninjakiwi.com/battles2/homs/season_12/leaderboard",
+        },
+        {
+            "id": "41546",
+            "name": "Season 12",
+            "start": 1687428000000,
+            "end": 1692180000000,
+            "totalScores": 254,
+            "leaderboard": "https://data.ninjakiwi.com/battles2/homs/season_11/leaderboard",
+        },
+    ]
+
+    request = test_utils.make_mocked_request("GET", "/test")
+    request.json = test_utils.make_mocked_coro(return_value=data)
+    request.status = 200
+
+    my_model = model(data, request)
+
+    future_season = await my_model.get_current_season()
+    assert future_season == "season_12"
+
+
+@pytest.mark.asyncio
+async def test_get_previous_season():
+    """Test for get_previous_season"""
+    data = [
+        {
+            "id": "lj44j3vt",
+            "name": "Season 13",
+            "start": 1687428000000,
+            "end": 1692180000000,
+            "totalScores": 254,
+            "leaderboard": "https://data.ninjakiwi.com/battles2/homs/season_12/leaderboard",
+        },
+        {
+            "id": "54321",
+            "name": "Season 12",
+            "start": 0,
+            "end": 0,
+            "totalScores": 254,
+            "leaderboard": "https://data.ninjakiwi.com/battles2/homs/season_11/leaderboard",
+        },
+        {
+            "id": "12345",
+            "name": "Season 11",
+            "start": 0,
+            "end": 0,
+            "totalScores": 254,
+            "leaderboard": "https://data.ninjakiwi.com/battles2/homs/season_10/leaderboard",
+        },
+    ]
+
+    request = test_utils.make_mocked_request("GET", "/test")
+    request.json = test_utils.make_mocked_coro(return_value=data)
+    request.status = 200
+
+    my_model = model(data, request)
+
+    future_season = await my_model.get_previous_season()
+    assert future_season == "season_11"
