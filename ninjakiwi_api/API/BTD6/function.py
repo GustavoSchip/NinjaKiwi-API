@@ -129,7 +129,8 @@ async def _btd6_url_factory(data: str, **options) -> Optional[str]:
                             teamSize
                         )  # TODO : Warn about unsupported teamsize size! (unfinished)
 
-                        raise Warning(f"Unsupported teamsize size: {teamSize}")  # TODO : Make this warning more useful
+                        if teamSize is not 1:
+                            raise Warning(f"Unsupported teamsize size: {teamSize}")  # TODO : Make this warning more useful
 
                     type_ = type_.lower()
 
